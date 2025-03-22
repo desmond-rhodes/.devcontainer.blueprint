@@ -1,0 +1,34 @@
+{
+	"editor.autoClosingBrackets": "never",
+	"editor.autoClosingComments": "never",
+	"editor.autoClosingDelete": "never",
+	"editor.autoClosingQuotes": "never",
+	"editor.autoClosingOvertype": "never",
+	"editor.autoIndent": "none",
+	"editor.autoSurround": "never",
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": false,
+	"editor.tabSize": 2,
+	"editor.useTabStops": false,
+	"files.eol": "\n",
+	"files.insertFinalNewline": true,
+	"files.trimFinalNewlines": true,
+	"files.trimTrailingWhitespace": true,
+	"latex-workshop.latex.tools": [
+		{
+			"name": "blueprint pdf",
+			"command": "leanblueprint",
+			"args": ["pdf"]
+		}
+	],
+	"latex-workshop.latex.recipes": [
+		{
+			"name": "blueprint",
+			"tools": [
+				"blueprint pdf"
+			]
+		}
+	],
+	"latex-workshop.latex.recipe.default": "blueprint",
+	"latex-workshop.latex.outDir": "../print"
+}
