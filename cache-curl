@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+cd /var/cache/curl
+filename=$(curl -LOC - -w '%{filename_effective}' "${1}")
+cat "${filename}"
