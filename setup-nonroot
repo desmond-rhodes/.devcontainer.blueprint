@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+'cache-micromamba' 'start'
+'cache-pip' 'start'
+
+'cache-curl' 'https://raw.githubusercontent.com/leanprover/elan/master/elan-init.sh' | sh -s -- -y
+'cache-curl' 'https://micro.mamba.pm/api/micromamba/linux-64/latest' | tar -jxC "${HOME}" 'bin/micromamba'
+
+bash -l <<-'EOF'
+	set -euxo pipefail
+
+	'cache-elan' `curl 'https://api.github.com/repos/leanprover/lean4/tags' | grep 'name' | sed 's/.*"name": "\([^"]*\)".*/\1/' | grep -v 'rc' | sort -r | head -1`
+	'cache-elan' `curl 'https://raw.githubusercontent.com/PatrickMassot/checkdecls/refs/heads/master/lean-toolchain' | sed 's/.*://'`
+	'cache-elan' `curl 'https://raw.githubusercontent.com/leanprover/doc-gen4/refs/heads/main/lean-toolchain' | sed 's/.*://'`
+
+	micromamba shell init -s bash -r "${HOME}/micromamba"
+	micromamba config append channels 'conda-forge'
+	micromamba config set channel_priority 'strict'
+	micromamba env create -y -n 'blueprint' python
+	micromamba run -n 'blueprint' pip install leanblueprint
+EOF
+
+printf "\nmicromamba activate 'blueprint'\n" >> "${HOME}/.bashrc"
+
+'cache-micromamba' 'stop'
+'cache-pip' 'stop'

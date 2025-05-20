@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+mk() { mkdir -p "${1}" && chmod 777 "${1}"; }
+
+mk '/var/tmp/micromamba'
+
+if [ "${1}" = 'start' ]; then
+	mkdir -p "${HOME}/micromamba"
+	ln -s '/var/tmp/micromamba' "${HOME}/micromamba/pkgs"
+fi
+
+if [ "${1}" = 'stop' ]; then
+	rm -f "${HOME}/micromamba/pkgs"
+fi

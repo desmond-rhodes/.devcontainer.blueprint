@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+apt-get -y install \
+	build-essential \
+	bzip2 \
+	curl \
+	git \
+	graphviz \
+	latexmk \
+	libgraphviz-dev \
+	texlive-bibtex-extra \
+	texlive-xetex

@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+mkcd() { mkdir -p "${1}" && chmod 777 "${1}" && cd "${1}"; }
+
+mkcd '/var/tmp/elan'
+
+if [ -f "${1}.tar" ]; then
+	tar -xf "${1}.tar" -C "${HOME}"
+else
+	elan toolchain install "${1}"
+	tar -cf "${1}.tar" -C "${HOME}" ".elan/toolchains/leanprover--lean4---${1}"
+fi

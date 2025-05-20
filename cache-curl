@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -euxo pipefail
+
+mkcd() { mkdir -p "${1}" && chmod 777 "${1}" && cd "${1}"; }
+
+sha256() { echo "${1}" | sha256sum | cut -d ' ' -f 1; }
+
+random() { head -c $((10*"${1}")) '/dev/urandom' | tr -dc 'A-Za-z0-9' | head -c "${1}" && echo; }
+
+mkcd '/var/tmp/curl'
+
+link="${1}"
+file=$(sha256 "${link}")
+tmp="${file}.$(random 8)"
+
+if [ ! -f "${file}" ]; then
+	curl -Lo "${tmp}" "${link}"
+	mv "${tmp}" "${file}"
+fi
+
+cat "${file}"
